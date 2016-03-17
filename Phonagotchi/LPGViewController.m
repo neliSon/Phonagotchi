@@ -13,6 +13,7 @@
 
 @property (nonatomic) UIImageView *petImageView, *bucketImageView, *appleImageView;
 @property (nonatomic) UIImageView *freshAppleImageView;
+@property (nonatomic, strong) NSTimer *timer;
 
 - (IBAction)petThePet:(id)sender;
 
@@ -123,9 +124,9 @@
     
 
     if (velocity > 500.0) {
-        
+        [self.timer invalidate];
         self.petImageView.image = [UIImage imageNamed:@"grumpy"];
-        [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(resetImage) userInfo:nil repeats:NO];
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(resetImage) userInfo:nil repeats:NO];
     }
 }
 
