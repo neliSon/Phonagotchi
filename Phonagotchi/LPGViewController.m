@@ -7,10 +7,15 @@
 //
 
 #import "LPGViewController.h"
+#import "Pet.h"
 
 @interface LPGViewController ()
 
 @property (nonatomic) UIImageView *petImageView;
+//@property (nonatomic) CGPoint startLocation, stopLocation;
+//@property (nonatomic) CGFloat dx, dy, distance;
+
+- (IBAction)petThePet:(id)sender;
 
 @end
 
@@ -26,6 +31,7 @@
     self.petImageView.translatesAutoresizingMaskIntoConstraints = NO;
     
     self.petImageView.image = [UIImage imageNamed:@"default"];
+    self.petImageView.userInteractionEnabled = YES;
     
     [self.view addSubview:self.petImageView];
     
@@ -44,7 +50,26 @@
                                                           attribute:NSLayoutAttributeCenterY
                                                          multiplier:1.0
                                                            constant:0.0]];
+    UIPanGestureRecognizer *petPet = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(petThePet:)];
     
+    [self.petImageView addGestureRecognizer: petPet];
+    
+    
+}
+
+- (IBAction)petThePet:(UIPanGestureRecognizer *)sender {
+    
+    if (sender.state != UIGestureRecognizerStateChanged) {
+        return;
+    }
+    
+    CGPoint vector = [sender velocityInView:self.petImageView];
+    CGFloat velocity = sqrt(vector.x*vector.x + vector.y*vector.y);
+    
+
+    if (velocity > 500.0) {
+        NSLog(@"Grumpy");
+    }
 }
 
 @end
