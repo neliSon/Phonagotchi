@@ -11,7 +11,7 @@
 
 @interface LPGViewController ()
 
-@property (nonatomic) UIImageView *petImageView;
+@property (nonatomic) UIImageView *petImageView, *bucketImageView, *appleImageView;
 //@property (nonatomic) CGPoint startLocation, stopLocation;
 //@property (nonatomic) CGFloat dx, dy, distance;
 
@@ -50,10 +50,53 @@
                                                           attribute:NSLayoutAttributeCenterY
                                                          multiplier:1.0
                                                            constant:0.0]];
+    
+    // Image view for basket
+    
+    self.bucketImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+    self.bucketImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    self.bucketImageView.image = [UIImage imageNamed:@"bucket"];
+    
+    [self.view addSubview:self.bucketImageView];
+    
+    NSLayoutConstraint *bucketImageViewBottom = [NSLayoutConstraint constraintWithItem:self.bucketImageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
+
+    NSLayoutConstraint *bucketImageViewLeft = [NSLayoutConstraint constraintWithItem:self.bucketImageView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.0];
+    
+    NSLayoutConstraint *bucketImageViewWidth = [NSLayoutConstraint constraintWithItem:self.bucketImageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:100];
+    
+    NSLayoutConstraint *bucketImageViewHeight = [NSLayoutConstraint constraintWithItem:self.bucketImageView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:100];
+    
+    [self.view addConstraints:@[bucketImageViewBottom, bucketImageViewLeft, bucketImageViewWidth, bucketImageViewHeight]];
+    
+    
+    // apple image view
+    self.appleImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+    self.appleImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    self.appleImageView.image = [UIImage imageNamed:@"apple"];
+    
+    [self.view addSubview:self.appleImageView];
+                                  
+    NSLayoutConstraint *appleImageViewBottom = [NSLayoutConstraint constraintWithItem:self.appleImageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-25.0];
+    
+    NSLayoutConstraint *appleImageViewLeft = [NSLayoutConstraint constraintWithItem:self.appleImageView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:25.0];
+    
+    NSLayoutConstraint *appleImageViewWidth = [NSLayoutConstraint constraintWithItem:self.appleImageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:50.0];
+    
+    NSLayoutConstraint *appleImageViewHeight = [NSLayoutConstraint constraintWithItem:self.appleImageView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:50.0];
+    
+    [self.view addConstraints:@[appleImageViewBottom, appleImageViewLeft, appleImageViewWidth, appleImageViewHeight]];
+    
+    
+    // Pan Gesture
     UIPanGestureRecognizer *petPet = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(petThePet:)];
     
     [self.petImageView addGestureRecognizer: petPet];
     
+    // Pinch Gesture
+    UIPinchGestureRecognizer *pickApple = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pickUpApple)];
     
 }
 
@@ -68,8 +111,14 @@
     
 
     if (velocity > 500.0) {
-        NSLog(@"Grumpy");
+        
+        self.petImageView.image = [UIImage imageNamed:@"grumpy"];
+
     }
+}
+
+- (IBAction)pickUpApple:(UIPinchGestureRecognizer *)sender {
+    
 }
 
 @end
